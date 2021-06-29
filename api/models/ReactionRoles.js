@@ -1,10 +1,9 @@
 const { Schema, model } = require("mongoose");
 
 module.exports = model(
-    "Count",
+    "ReactionRoles",
     new Schema({
-        Channel: String,
-        Count: Number,
-        UserID: Number,
+        Message: String,
+        Roles: Array,
     })
 );
