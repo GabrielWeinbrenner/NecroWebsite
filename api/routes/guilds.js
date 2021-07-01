@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
-var Guilds = require("../models/Guilds.js");
+var Guild = require("../models/Guild.js");
 
 router.get("/", function (req, res) {
-    Guilds.find()
+    Guild.find()
         .then(function (guilds) {
             res.json(guilds);
         })
@@ -14,7 +14,7 @@ router.get("/", function (req, res) {
 
 router.get("/:id", async function (req, res) {
     try {
-        const guild = await Guilds.findOne(
+        const guild = await Guild.findOne(
             { guildID: req.params.id },
             async (err, data) => {
                 if (!data) return;
@@ -28,7 +28,7 @@ router.get("/:id", async function (req, res) {
 });
 
 router.post("/", async function (req, res) {
-    const guilds = new Guilds(req.body);
+    const guilds = new Guild(req.body);
     try {
         await guilds.save();
         res.status(201).send({ guilds });
@@ -39,10 +39,11 @@ router.post("/", async function (req, res) {
 
 router.post("/:id", async function (req, res) {
     const newValue = req.body;
+    console.log(newValue);
     try {
-        await Guilds.findOneAndUpdate({ guildID: req.params.id }, { newValue });
-
-        res.status(200).send();
+        await Guild.findOneAndUpdate({ GuildID: req.params.id }, newValue);
+        
+        res.status(200).send({newValue});
     } catch (e) {
         res.status(500).send();
     }
