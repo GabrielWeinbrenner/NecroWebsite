@@ -1,6 +1,5 @@
 import { TextField, Typography, Grid, Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 function GuildPage() {
     const [guild, setGuild] = useState({
@@ -36,15 +35,43 @@ function GuildPage() {
         Mute: [""],
         GhostPing: false,
     });
-
+    function changeGuild(event, diff) {
+        guild[diff] = event.target.value;
+        setGuild({ ...guild });
+    }
     useEffect(() => {
         fetch("http://localhost:3001/guilds")
             .then((res) => res.json())
             .then((data) => console.log(data));
     }, []);
     return (
-        <Grid>
-            <h1>Guild Change Form</h1>
+        <Grid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="center"
+        >
+            <Grid item>
+                <Typography variant="h2">Guild Change Form</Typography>
+            </Grid>
+            <Grid item>
+                <TextField
+                    id="outlined-required"
+                    label="Prefix"
+                    variant="outlined"
+                    value={guild.Prefix}
+                    onChange={(e) => changeGuild(e, "Prefix")}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                    id="outlined-required"
+                    label="Anti-Invite"
+                    variant="outlined"
+                    value={guild.description}
+                    onChange={(e) => changeGuild(e, "description")}
+                />
+            </Grid>
         </Grid>
     );
 }

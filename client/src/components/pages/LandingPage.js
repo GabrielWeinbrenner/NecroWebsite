@@ -1,7 +1,7 @@
 function LandingPage() {
     return (
         <div>
-            <h1>Guild Change Form</h1>
+            <h1>Landing</h1>
         </div>
     );
 }
